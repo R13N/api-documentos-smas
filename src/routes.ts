@@ -22,7 +22,7 @@ router.get("/processos", new GetAllProcController().handle);
 router.delete("/processos/:numero", new DeleteProcController().handle);
 
 router.post("/documentos", new CreateDocController().handle);
-router.get("/documentos", new GetDocByFilterController().handle);
+router.get("/documentos/filter", new GetDocByFilterController().handle);
 router.get("/documentos/all", new GetAllDocsController().handle);
 router.get("/documentos/:id", new GetDocByIdController().handle);
 router.delete("/documentos/:id", new DeleteDocByIdController().handle);

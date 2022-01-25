@@ -3,13 +3,13 @@ import { GetDocByFilterService } from "../../services/Documentos/GetDocByFilterS
 
 class GetDocByFilterController {
 
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response): Promise<Response> {
 
-    const { numero, situacao } = request.body;
+    const { filter } = request.body;
 
     const getDocByFilterService = new GetDocByFilterService();
 
-    const documentos = await getDocByFilterService.execute(numero, situacao);
+    const documentos = await getDocByFilterService.execute(filter);
 
     return response.json(documentos);
   }
