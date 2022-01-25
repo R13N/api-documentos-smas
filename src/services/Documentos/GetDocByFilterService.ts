@@ -2,21 +2,25 @@ import prismaClient from "../../prisma";
 
 class GetDocByFilterService {
 
-  async execute(numero: string, situacao: string) {
+  async execute(filter: string) {
 
       const documentos = await prismaClient.documento.findMany({
         where: {
           OR: [
             {
               numero_processo: {
-                contains: numero,
+                contains: filter,
               },
-              situacao: situacao
-            }  
-          ]
+            },
+            {
+              situacao: {
+                contains: filter,
+              },
+            },
+          ],
         },
         include: {
-          historico: true
+          historico: true,
         },
         orderBy: {
           data_documento: "desc"
