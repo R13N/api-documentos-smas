@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Processo {
+  numero  String @id @unique
+  nome    String
+
+  documentos  Documento[]
+  @@map("processos")
+}
+
+model Documento {
+  id  String @id @default(uuid())
+  tipo String
+  numero String
+  data_documento DateTime
+  data_recebimento DateTime
+  origem String
+  destino String
+  situacao String @default("esperando resposta")
+  prazo Int
+
+  historico Historico[]
+
+  numero_processo String
+  processo Processo @relation(fields: [numero_processo], references: [numero])
+
+  @@map("documentos")
+}
+
+model Historico {
+  id String @id @default(uuid())
+  text String
+  data_criacao DateTime @default(now())
+
+  documento_id String
+  documento Documento @relation(fields: [documento_id], references: [id])
+
+  @@map("historico")
+
+}
